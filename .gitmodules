@@ -1,3 +1,6 @@
 [submodule "toggl-cli"]
 	path = toggl-cli
 	url = https://github.com/drobertadams/toggl-cli.git
+[submodule "TogglPy"]
+	path = TogglPy
+	url = https://github.com/matthewdowney/TogglPy.git
