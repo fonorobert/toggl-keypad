@@ -2,7 +2,7 @@ from TogglPy import Toggl
 import configparser, os 
 
 configParser = configparser.RawConfigParser()
-configFilePath = os.path.expanduser("~") + "/.togglrc"
+configFilePath = os.path.expanduser("~") + "/.togglkeypadrc"
 configParser.read(configFilePath)
 
 api_key = configParser.get('auth', 'api_token')
