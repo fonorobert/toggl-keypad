@@ -1,6 +1,16 @@
 # detect keypresses so we can later trigger Toggl events with them
-import evdev
+import evdev, configparser, os
 from evdev import InputDevice, categorize, ecodes
+
+## get config
+
+configParser = configparser.RawConfigParser()
+
+
+configFilePath = os.path.join(os.path.abspath(os.path.dirname(__file__))) + '/config.cfg'
+configParser.read(configFilePath)
+
+input_device = configParser.get('device', 'input_device')
 
 ## get list of all devices
 #devices = [evdev.InputDevice(path) for path in evdev.list_devices()]
@@ -9,7 +19,7 @@ from evdev import InputDevice, categorize, ecodes
 #    print(device.path, device.name, device.phys)
 
 # listen for events
-device = InputDevice("/dev/input/event20") # my keyboard
+device = InputDevice(input_device) # my keyboard
 # evaluate events
 for event in device.read_loop():
     # respond if S key is released
