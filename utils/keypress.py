@@ -12,13 +12,14 @@ configParser.read(configFilePath)
 
 input_device = configParser.get('device', 'input_device')
 
-## get list of all devices
-#devices = [evdev.InputDevice(path) for path in evdev.list_devices()]
-#
-#for device in devices:
-#    print(device.path, device.name, device.phys)
+# get list of all devices
+devices = [evdev.InputDevice(path) for path in evdev.list_devices()]
 
-# listen for events
+for device in devices:
+    print(device.path, device.name, device.phys)
+
+ listen for events
+
 device = InputDevice(input_device) # my keyboard
 # evaluate events
 for event in device.read_loop():
