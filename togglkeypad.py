@@ -7,7 +7,8 @@ configFilePath = os.path.join(os.path.abspath(os.path.dirname(__file__))) + '/co
 configParser.read(configFilePath)
 
 config = {}
-config['api_token'] = configParser.get('auth', 'api_token')
+config['api_token'] = configParser.get('toggl', 'api_token')
+config['ws_id'] = configParser.get('toggl', 'ws_id')
 config['device_path'] = configParser.get('device', 'input_device')
 config['keys'] = dict(configParser.items('keys'))
 config['projects'] = dict(configParser.items('projects'))
