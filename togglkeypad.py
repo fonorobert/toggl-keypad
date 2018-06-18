@@ -14,9 +14,21 @@ config['keys'] = dict(configParser.items('keys'))
 config['projects'] = dict(configParser.items('projects'))
 
 
+# connect to Toggl
+toggl = TogglPy.Toggl()
+
+toggl.setAPIKey(config['api_token'])
+
+
+
+#print(currententry)
+
+
 
 def stop():
     # stop timer
+    currententry = toggl.currentRunningTimeEntry()
+    toggl.stopTimeEntry(currententry['data']['id'])
     print("timer stopped")
 
 def start(project):
@@ -50,10 +62,4 @@ for event in device.read_loop():
                 key_react(key)
 
 
-#toggl = TogglPy.Toggl()
 
-#toggl.setAPIKey(config['api_token'])
-
-#currententry = toggl.currentRunningTimeEntry()
-
-#print(currententry)
