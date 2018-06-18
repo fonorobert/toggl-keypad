@@ -27,7 +27,7 @@ def key_react(key_pressed):
     keys = config['keys']
     projects = config['projects']
 
-    if key != '0':
+    if key != 'stop':
         start(key)
     else:
         stop()
@@ -44,8 +44,7 @@ for event in device.read_loop():
         #switch statement comes here
 
 
-        for key in config['keys']:
-            
+        for key in config['keys']: 
             if int(config['keys'][key]) == event.code:
                 key_react(key)
 
