@@ -28,8 +28,11 @@ toggl.setAPIKey(config['api_token'])
 def stop():
     # stop timer
     currententry = toggl.currentRunningTimeEntry()
-    toggl.stopTimeEntry(currententry['data']['id'])
-    print("timer stopped")
+    if currententry['data'] is None:
+        print("no timer running")
+    else:
+        toggl.stopTimeEntry(currententry['data']['id'])
+        print("timer stopped")
 
 def start(project):
     # get project id, start timer on project
