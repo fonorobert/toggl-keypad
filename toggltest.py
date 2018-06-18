@@ -1,4 +1,4 @@
-from TogglPy import Toggl
+from TogglPy import TogglPy
 import configparser, os 
 
 configParser = configparser.RawConfigParser()
@@ -9,7 +9,7 @@ configParser.read(configFilePath)
 
 api_token = configParser.get('auth', 'api_token')
 
-toggl = Toggl()
+toggl = TogglPy.Toggl()
 
 # this is a test accounts key. yeah, i know, api key in git is bad, whatevs
 toggl.setAPIKey(api_token)
