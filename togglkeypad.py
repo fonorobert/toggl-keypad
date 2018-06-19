@@ -34,9 +34,10 @@ def stop():
         toggl.stopTimeEntry(currententry['data']['id'])
         print("timer stopped")
 
-def start(project):
+def start(projectkey):
+    toggl.startTimeEntry("started from keypad", config['projects'][projectkey])
     # get project id, start timer on project
-    print("timer started on project " + project)
+    print("timer started on project with id " + config['projects'][projectkey])
 
 
 def key_react(key_pressed):
