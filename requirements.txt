@@ -1,0 +1,4 @@
+docutils==0.14
+evdev==1.0.0
+lockfile==0.12.2
+python-daemon==2.1.2
