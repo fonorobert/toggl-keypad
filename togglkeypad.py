@@ -1,5 +1,5 @@
 from TogglPy import TogglPy
-import configparser, os, evdev, sys 
+import configparser, os, evdev, sys, json
 
 # load config
 configParser = configparser.RawConfigParser()
@@ -12,34 +12,18 @@ config['ws_id'] = configParser.get('toggl', 'ws_id')
 config['device_path'] = configParser.get('device', 'input_device')
 config['keys'] = dict(configParser.items('keys'))
 timers = dict(configParser.items('timers'))
-print(type(timers))
-print(timers)
 
-
-print(type(timers['1']))
-print(timers['1'])
-print(timers['1'][0])
-timer1str = '{"projectid": 124015468, "description": "this is a TE"}'
-timer1 = dict(timer1str)
-print(type(timer1))
-print(timer1)
-
-exit()
 # turn timers into dicts
 config['timers'] = {}
 
 for key in timers:
-    print(timers[key])
     config['timers'][key] = {}
-    timer_temp = dict(timers[key])
+    timer_temp = json.loads(timers[key])
     for attr in timer_temp:
         config['timers'][key][attr] = timer_temp[attr]
-    print(config['timers'][key])
-    del timer_temp
-
 
 print(config['timers'])
-exit()
+
 
 # connect to Toggl
 toggl = TogglPy.Toggl()
@@ -62,14 +46,21 @@ def stop():
         print("timer stopped")
 
 def start(projectkey):
-    toggl.startTimeEntry("started from keypad", config['projects'][projectkey])
+    
+    # set up local copies
+
+    timer = config['timers'][projectkey]
+    project = timer['projectid'] if timer['projectid'] else False 
+    description = timer['description'] if timer['description'] else False 
+#    task = timer['task'] if timer['task'] else False 
+
+    toggl.startTimeEntry(description if description else "", project if project else None)
     # get project id, start timer on project
-    print("timer started on project with id " + config['projects'][projectkey])
+#    print("timer started on project with id " + config['projects'][projectkey])
 
 
 def key_react(key_pressed):
     keys = config['keys']
-    projects = config['projects']
 
     if key != 'stop':
         start(key)
