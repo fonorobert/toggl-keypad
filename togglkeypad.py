@@ -31,11 +31,6 @@ toggl = TogglPy.Toggl()
 toggl.setAPIKey(config['api_token'])
 
 
-
-#print(currententry)
-
-
-
 def stop():
     # stop timer
     currententry = toggl.currentRunningTimeEntry()
@@ -50,13 +45,14 @@ def start(projectkey):
     # set up local copies
 
     timer = config['timers'][projectkey]
-    project = timer['projectid'] if timer['projectid'] else False 
-    description = timer['description'] if timer['description'] else False 
-#    task = timer['task'] if timer['task'] else False 
+    project = timer['projectid'] if 'projectid' in timer else None 
+    description = timer['description'] if 'description' in timer else None 
+    task = timer['taskid'] if 'taskid' in timer else None 
 
-    toggl.startTimeEntry(description if description else "", project if project else None)
-    # get project id, start timer on project
-#    print("timer started on project with id " + config['projects'][projectkey])
+    # clear project if task is present to make sure there is no conflict
+    project = None if task else project
+
+    toggl.startTimeEntry(description if description else "", project if project else None, task if task else None)
 
 
 def key_react(key_pressed):
